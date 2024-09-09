@@ -164,7 +164,7 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   ///
   /// _このメソッドは、[create] のヘルパー・メソッドのため、_<br/>
   /// _[create]実装内で、`super.addContainer()` のようにして利用します。_<br/>
-  /// _派生先で不用意に使われないよう、以下のようにオーバーライドして使用禁止にしてください。_<br/>
+  /// _派生先では、不用意に使われないよう、以下のようにオーバーライドして使用禁止にしてください。_<br/>
   /// ```dart
   ///  @override
   ///  void addContainer(int id, T object) {
