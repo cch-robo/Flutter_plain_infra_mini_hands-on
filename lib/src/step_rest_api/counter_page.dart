@@ -1,4 +1,4 @@
-// デフォルト・カウンターアプリのコードに、カウント値が 10以上で REST API をコールするよう変更。
+// デフォルト・カウンターアプリのコードに、カウント値が 10ごとに REST API をコールするよう変更。
 // REST API コール基盤により、GitHub Android コントリビュータ取得の動作確認を行います。
 
 import 'package:flutter/material.dart';
@@ -45,8 +45,8 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
     // TODO add line start.
-    // カウント値が、10以上であれば REST API をコールします。
-    if (_counter >= 10) {
+    // カウント値が、10ごとに REST API をコールします。
+    if (_counter % 10 == 0) {
       () async {
         // REST API 実行の動作確認
         RestApiService service = RestApiCreator.create();
