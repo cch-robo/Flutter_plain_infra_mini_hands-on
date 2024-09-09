@@ -21,7 +21,7 @@ class AppErrorHandler {
   /// アプリ起動
   ///
   /// Flutter アプリのエラーハンドラを設定して、アプリを起動します。
-  void runAppApp(Widget app) {
+  void runApp(Widget app) {
     runZonedGuarded(() async {
       // アプリ全体のエラーハンドリングを行うため、
       // アプリ起動は、この関数パラメータ内で行う必要があることに留意。
