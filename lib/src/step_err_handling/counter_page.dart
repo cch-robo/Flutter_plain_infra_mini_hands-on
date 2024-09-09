@@ -1,15 +1,14 @@
 // デフォルト・カウンターアプリのコードに、カウント値が 10以上でエラーを発生するよう変更。
-// Flutter フレームワークのエラーハンドラ設定により、エラーの詳細ログを出力させます。
+// トライキャッチ強制の処理実行基盤でエラーを捕捉して、エラー対応済のログを出力させます。
 
 import 'package:flutter/material.dart';
-import 'package:infra/src/infra/default_error.dart';
 
-import '../infra/app_error_handler.dart';
+import '../infra/debug_logger.dart';
+import '../infra/default_error.dart';
+import '../infra/try_catch_executor.dart';
 
 void main() {
-  // アプリのエラーハンドラを設定して、アプリを起動します。
-  // アプリ起動前に必要な設定は、起動前に実行しておいてください。
-  AppErrorHandler().runAppWithErrorHandler(const MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -47,7 +46,17 @@ class _MyHomePageState extends State<MyHomePage> {
     // TODO add line start.
     // カウント値が、10以上であればエラーを発生させます。
     if (_counter >= 10) {
-      throw DefaultError('Count value is over 10.');
+      // エラーハンドリングの動作確認
+      TryCatch.executeVoid(
+        executor: () {
+          debugLog('error throw.', info: this);
+          throw DefaultError('Count value is over 10.');
+        },
+        causeHandler: (Object cause) {
+          debugLog('handled -> ${cause.toString()}', info: this);
+          return const Result<Void>.success();
+        },
+      );
     }
     // TODO add line end.
   }
