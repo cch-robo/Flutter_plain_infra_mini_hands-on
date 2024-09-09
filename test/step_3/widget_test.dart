@@ -28,7 +28,7 @@ void main() {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
 
-    CounterRepository di = CounterRepository.singleton;
+    CounterDiContainer di = CounterDiContainer.singleton;
     int id = di.listUpIds().first;
 
     MockCounter mock = MockCounter();
