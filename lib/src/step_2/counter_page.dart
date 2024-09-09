@@ -39,7 +39,7 @@ class _MyHomePageState extends State<MyHomePage> {
   /*
   int _counter = 0;
   */
-  late CounterRepository _di;
+  late CounterDiContainer _di;
   late Counter _counter;
   // TODO modify line end.
 
@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void initState() {
     super.initState();
-    _di = CounterRepository.singleton;
+    _di = CounterDiContainer.singleton;
     _counter = _di.create();
   }
 

@@ -8,21 +8,21 @@ import '../infra/default_error.dart';
 import '../infra/dependency_injector.dart';
 
 /// Counter オブジェクトの DIコンテナ・クラス
-class CounterRepository extends AbstractDependencyInjector<Counter, ReferencableCounter, InjectableCounter> {
+class CounterDiContainer extends AbstractDependencyInjector<Counter, ReferencableCounter, InjectableCounter> {
   /// シングルトン・インスタンス
-  static CounterRepository? _singletonInstance;
+  static CounterDiContainer? _singletonInstance;
 
   /// シングルトン・ゲッター
-  static CounterRepository get singleton {
+  static CounterDiContainer get singleton {
     if (_singletonInstance == null) {
-      _singletonInstance = CounterRepository._();
+      _singletonInstance = CounterDiContainer._();
       return _singletonInstance!;
     }
     return _singletonInstance!;
   }
 
   /// プライベート・コンストラクタ
-  CounterRepository._();
+  CounterDiContainer._();
 
   /// Counter オブジェクト生成
   @override

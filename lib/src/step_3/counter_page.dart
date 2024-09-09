@@ -35,13 +35,13 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late CounterRepository _di;
+  late CounterDiContainer _di;
   late Counter _counter;
 
   @override
   void initState() {
     super.initState();
-    _di = CounterRepository.singleton;
+    _di = CounterDiContainer.singleton;
     _counter = _di.create();
   }
 
