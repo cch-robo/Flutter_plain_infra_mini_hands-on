@@ -31,7 +31,8 @@
 ## ミニハンズオンに必要なもの
 1. PCに Flutter開発環境をインストールしておいてください。（①参照）  
   _モバイルアプリ開発に必要な Android SDK などのインストールは任意です。_  
-  _この Git リポジトリをクローンするため、`git`のインストールも必要です。_
+  _この Git リポジトリをクローンするため、`git`のインストールを含めて、_  
+  _Android Studio/IntelliJや VSCODE のインストール＆プラグイン設定も必要です。_
 
 2. PC に Flutter開発環境をインストールされていなければ、  
   Webブラウザで利用できる [DartPad](https://dartpad.dev/)を御利用ください。  
@@ -40,7 +41,24 @@
 - ①[Install | Flutter](https://docs.flutter.dev/get-started/install)
 - ②[DartPad](https://dartpad.dev/) ⇒ ブラウザ上で利用できる、簡易オンライン Flutter IDE
 
+
 ## ミニハンズオンの進めかた
+
+### 1. Flutter開発環境インストール済みのかた  
+1. 下記のコマンドで、リポジトリをクローンしてください。  
+  `git clone https://github.com/cch-robo/Flutter_plain_infra_mini_hands-on.git`  
+
+2. step_1 アプリへの切り替え  
+  クローンしたローカルリポジトリの `lib/main.dart`を IDE で開き、  
+  アプリが `step_1`のコードを参照するよう `main関数`を以下のように修正してください。
+```dart
+void main() {
+  step_1.main();
+}
+```
+
+
+### 2. DartPad を利用されるかた
 
 
 ## [Flutter Brand Guidelines](https://docs.flutter.dev/brand#community-use-exceptions)
