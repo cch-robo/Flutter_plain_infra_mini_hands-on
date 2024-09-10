@@ -15,9 +15,9 @@
 ```dart
   void _incrementCounter() {
     setState(() {
-    _counter++;
-  });
-}
+      _counter++;
+    });
+  }
 ```
 - カウント値の更新は、プライベート関数 `_incrementCounter`からしかないため外部から干渉されない。（カプセル化）
 - カウント値の更新は、プライベート関数 `_incrementCounter`によるインクリメント(+1 更新)しかできない。
