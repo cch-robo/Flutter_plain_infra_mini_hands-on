@@ -39,14 +39,14 @@ void main() {
     expect(find.text('1'), findsNothing);
 
     // Tap the '+' icon and trigger a frame.
-    mock.count = 100;
+    mock.count = 99;
     await tester.tap(find.byIcon(Icons.add));
     await tester.pump();
 
     // Verify that our counter has incremented.
     expect(find.text('0'), findsNothing);
     expect(find.text('1'), findsNothing);
-    expect(find.text('101'), findsOneWidget);
+    expect(find.text('100'), findsOneWidget);
   });
 }
 
@@ -56,25 +56,21 @@ void main() {
 class MockCounter implements ReferencableCounter {
   MockCounter();
 
-  // ignore: prefer_final_fields
-  int _count = 0;
-
-  @override
-  int get count => _count;
-
-  @override
-  set count(int value) => _count = value;
-
   @override
   int get id => hashCode;
 
-  @override
-  void clear() {
-    count = 0;
-  }
+  // ignore: prefer_final_fields
+  late int? _value;
 
   @override
-  void increment() {
-    count++;
-  }
+  int get count => _value!;
+
+  @override
+  set count(int value) => _value = value;
+
+  @override
+  void clear() => _value = 0;
+
+  @override
+  void increment() => count++;
 }
