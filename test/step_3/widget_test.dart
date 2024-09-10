@@ -3,6 +3,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:infra/src/infra/dependency_injector.dart';
 import 'package:infra/src/step_3/counter_di.dart';
 import 'package:infra/src/step_3/counter_page.dart';
 
@@ -53,23 +54,17 @@ void main() {
 /// DI コンテナを介して参照可能で、動的注入されるモックオブジェクト
 ///
 /// _テストコードから値読み出しや状態更新など操作可能_
-class MockCounter implements ReferencableCounter {
-  MockCounter();
-
-  @override
-  int get id => hashCode;
-
+class MockCounter extends AbstractReferencable implements ReferencableCounter {
   // ignore: prefer_final_fields
   late int? _value;
+
+  MockCounter();
 
   @override
   int get count => _value!;
 
   @override
   set count(int value) => _value = value;
-
-  @override
-  void clear() => _value = 0;
 
   @override
   void increment() => count++;
