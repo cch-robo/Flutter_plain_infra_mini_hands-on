@@ -28,6 +28,21 @@
 簡易コードによる依存性注入(DIコンテナ)について体験してもらいます。  
 
 
+## ミニハンズオンに必要なもの
+1. PCに Flutter開発環境をインストールしておいてください。（①参照）  
+  _モバイルアプリ開発に必要な Android SDK などのインストールは任意です。_  
+  _この Git リポジトリをクローンするため、`git`のインストールも必要です。_
+
+2. PC に Flutter開発環境をインストールされていなければ、  
+  Webブラウザで利用できる [DartPad](https://dartpad.dev/)を御利用ください。  
+  _テストコードの実行はできませんが、動作確認のみであれば利用できます。_
+
+- ①[Install | Flutter](https://docs.flutter.dev/get-started/install)
+- ②[DartPad](https://dartpad.dev/) ⇒ ブラウザ上で利用できる、簡易オンライン Flutter IDE
+
+## ミニハンズオンの進めかた
+
+
 ## [Flutter Brand Guidelines](https://docs.flutter.dev/brand#community-use-exceptions)
 - “Flutter and the related logo are trademarks of Google LLC. FlutterKaigi is not affiliated with or otherwise sponsored by Google LLC.”
 - "Flutterおよび関連するロゴは、Google LLC の商標です。FlutterKaigi は、Google LLC との提携および、Google LLC が後援しているものでもないことに御留意下さい。”
