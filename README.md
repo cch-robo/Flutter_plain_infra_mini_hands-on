@@ -50,15 +50,40 @@
 
 2. step_1 アプリへの切り替え  
   クローンしたローカルリポジトリの `lib/main.dart`を IDE で開き、  
-  アプリが `step_1`のコードを参照するよう `main関数`を以下のように修正してください。
+  アプリが `step_1`のコードを参照するよう `main関数`を以下のように修正してください。  
 ```dart
 void main() {
   step_1.main();
 }
 ```
 
+3. 動作確認  
+  `flutter pub get`コマンド＋`flutter run`コマンドを実行して、アプリが動作することを確認します。  
+
+4. README.md ドキュメントの確認  
+  ブラウザまたは IDEで、step_1の [README.md](lib/src/step_1/README.md) を開き、説明を確認してください。  
+
+5. 次のステップ  
+  step_2や step_3も、2〜4と同じ手順で進めます。
+
 
 ### 2. DartPad を利用されるかた
+1. step_1 アプリへの切り替え  
+  GitHub webページの [`lib/src/step_1/dartpad.dart`](lib/src/step_1/dartpad.dart)を ブラウザで開き、  
+  全てのコード内容をクリップボードにコピーします。
+
+2. 次にブラウザで [DartPad](https://dartpad.dev/)を開き、  
+  画面左上の `New`から `Flutter snippet`で開いた Flutterコードを全削除してから、  
+  クリップボードの内容をペーストします。
+
+3. 動作確認  
+   DartPad画面上の `[Run]`ボタンをタップして、アプリが動作することを確認します。
+
+4. README.md ドキュメントの確認  
+   ブラウザまで、step_1の [README.md](lib/src/step_1/README.md) を開き、説明を確認してください。  
+
+5. 次のステップ  
+   step_2や step_3も、2〜4と同じ手順で進めます。
 
 
 ## [Flutter Brand Guidelines](https://docs.flutter.dev/brand#community-use-exceptions)
