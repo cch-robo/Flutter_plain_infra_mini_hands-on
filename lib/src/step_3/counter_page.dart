@@ -35,19 +35,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late CounterDiContainer _di;
   late Counter _counter;
 
   @override
   void initState() {
     super.initState();
-    _di = CounterDiContainer.singleton;
-    _counter = _di.create();
+    var di = CounterDiContainer.singleton;
+    _counter = di.create();
   }
 
   @override
   void dispose() {
-    _di.deleteAllInjector();
+    var di = CounterDiContainer.singleton;
+    di.deleteAllInjector();
     super.dispose();
   }
 
