@@ -111,6 +111,9 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
 /// _プライベート・コンストラクタを実装してください。_<br/>
 ///
 /// ```dart
+///   // 注入禁止要請フラグ
+///   static bool isNoUseInject = false;
+///
 ///   // シングルトン・インスタンス
 ///   static SampleDependencyInjector? _singletonInstance;
 ///
@@ -124,10 +127,15 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
 ///   }
 ///
 ///   // プライベート・コンストラクタ
-///   SampleDependencyInjector._();
+///   SampleDependencyInjector._() ｛
+///     isForbiddenInject = isNoUseInject;
+///   ｝
 /// ```
 abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends Injectable>
     implements DependencyInjector<T, RT, IT> {
+  /// 注入禁止フラグ
+  late final bool isForbiddenInject;
+
   final Map<int, T> _repo = {};
 
   /// 機能実態オブジェクト生成
@@ -144,9 +152,9 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   ///   //
   ///   @override
   ///   Counter create() {
-  ///     if (!checkDebugMode(isThrowError: false)) {
+  ///     if (!checkDebugMode(isThrowError: false) || isForbiddenInject) {
+  ///       // デバッグモードでないか注入禁止なので Dependency Inject を利用させません。
   ///       CounterImpl counter = CounterImpl._();
-  ///       addContainer(counter.id, counter);
   ///       return counter;
   ///     }
   ///     // デバッグモードの場合のみ動的 Dependency Inject 可能にします。
@@ -173,6 +181,7 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   /// ```
   @override
   void addContainer(int id, T object) {
+    checkDebugMode();
     _repo[id] = object;
   }
 
@@ -215,6 +224,9 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
 
   @override
   bool checkDebugMode({bool isThrowError = true}) {
+    if (kDebugMode && isForbiddenInject) {
+      throw DefaultError('Dependency Injection methods are forbidden to use.');
+    }
     if (!kDebugMode && isThrowError) {
       throw DefaultError('Dependency Injection methods can use to only Debug mode.');
     }
