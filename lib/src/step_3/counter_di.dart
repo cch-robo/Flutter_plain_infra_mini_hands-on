@@ -70,9 +70,6 @@ class CounterDouble extends AbstractInjectable<ReferencableCounter> implements I
   set count(int value) => reference!.count = value;
 
   @override
-  void clear() => reference!.clear();
-
-  @override
   void increment() => reference!.increment();
 }
 
@@ -95,9 +92,6 @@ class CounterImpl extends AbstractReferencable implements ReferencableCounter {
   set count(int value) => _value = value;
 
   @override
-  void clear() => _value = 0;
-
-  @override
   void increment() => count++;
 }
 
@@ -112,8 +106,6 @@ abstract interface class Counter {
   int get count;
 
   set count(int value);
-
-  void clear();
 
   void increment();
 }
