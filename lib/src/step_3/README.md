@@ -22,8 +22,8 @@
   _`DartPad`を使われている方は、ブラウザで [lib/src/step_2/dartpad.dart](./dartpad.dart) を開いて、_  
   _全コードをクリップボードにコピーしてから、ブラウザの [DartPad](https://dartpad.dev) にペーストしてください。_
 
-`step_2`で、  
-依存元の`ReferencableCounter`インターフェースと実装の`CounterImpl`クラス、注入先の`InjectableCounter`インターフェースを定義したので、  
+`step_2`で、 依存元の`ReferencableCounter`インターフェースと  
+実装の`CounterImpl`クラス、注入先の`InjectableCounter`インターフェースを定義したので、  
 これから注入先の `CounterDouble`クラスを定義して、**外部からのメッセージを依存元に処理させるだけの`Proxy`** を作ることにします。  
 
 注入先となる `CounterDouble`クラスには、依存元の`CounterImpl`オブジェクトが注入されるので、  
