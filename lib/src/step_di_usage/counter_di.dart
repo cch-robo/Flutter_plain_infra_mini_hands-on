@@ -41,8 +41,8 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
     // TODO modify line end.
     // デバッグモードの場合のみ Dependency Inject 可能にします。
     CounterDouble counter = CounterDouble._();
-    CounterImpl inject = CounterImpl._();
-    counter.init(inject);
+    CounterImpl reference = CounterImpl._();
+    counter.init(reference);
     super.addContainer(counter.id, counter);
     return counter;
   }
