@@ -1,4 +1,4 @@
-# step.2:カウンター機能(状態オブジェクト)を コンテナに生成させます。
+# step.2:カウンター機能(状態オブジェクト)を コンテナに生成させる。
 
 - 依存を分離するため、カウンター機能（状態オブジェクト）を、DI コンテナから取得させます。
 - 状態オブジェクトを直接生成（ハードコード）していませんが、DIコンテナはまだ依存注入に対応していません。
@@ -9,7 +9,7 @@
 このため [lib/src/step_2/counter_page.dart](./counter_page.dart) のコード内容は、step_1 と同じです。  
 [lib/src/step_2/counter_di.dart](./counter_di.dart) には、カウント機能の依存元や DIコンテナのコードを追加します。  
 
-- IDEで、この`README.md`と同じディレクトリにある [lib/src/step_2/counter_di.dart](./counter_di.dart) と、
+- IDEで、この`README.md`と同じディレクトリにある [lib/src/step_2/counter_di.dart](./counter_di.dart) と、  
   [lib/src/step_2/counter_page.dart](./counter_page.dart) を開いてください。  
   _`DartPad`を使われている方は、ブラウザで開いてください。_  
 
@@ -19,7 +19,7 @@
 ### カウンタ要件となる、機能仕様インターフェースの定義
 - IDEで [counter_di.dart](./counter_di.dart) を開いて、まずはカウンタの要件 ⇒ 機能仕様インターフェースを定義します。  
   _`DartPad`を使われている方は、ブラウザで [lib/src/step_2/dartpad.dart](./dartpad.dart) を開いて、_  
-  - 全コードをクリップボードにコピーしてから、ブラウザの [DartPad](https://dartpad.dev) にペーストしてください。_  
+  _全コードをクリップボードにコピーしてから、ブラウザの [DartPad](https://dartpad.dev) にペーストしてください。_  
 
 カウンター・アプリでは、画面にカウント値を表示して、`FAB(＋)`タップごとにカウント値が +1 ⇒ インクリメントされます。  
 これよりカウンタの機能要件は、カウント値の`getter/setter`と、`increment`があれば良いことになります。  
@@ -52,10 +52,10 @@ abstract interface class Counter {
 カウンタの機能仕様インターフェースのカウンタ機能実装クラスを作る前に、  
 DIコンテナで機能実装を依存先に注入できるようにするため、**依存元**と**注入先**の基底インターフェースを定義します。  
 
-DIコンテナについては、DIコンテナの基本機能を提供する
+DIコンテナについては、DIコンテナの基本機能を提供する  
 **インフラ・ライブラリ([lib/src/infra/dependency_injector.dart](../infra/dependency_injector.dart))** を用意しておきました。
 
-予め **依存元**の`ReferencableCounter`と **注入先**の`InjectableCounter`のインターフェースを定義していますが、
+予め **依存元**の`ReferencableCounter`と **注入先**の`InjectableCounter`のインターフェースを定義していますが、  
 DIコンテナのインフラ・ライブラリ([dependency_injector.dart](../infra/dependency_injector.dart))と連携するよう修正してください。  
 
 **【修正前】**
@@ -216,8 +216,8 @@ DIコンテナでのカウンタ機能は、
 ```
 
 `_counter`フィールドは、カウンタ機能仕様インターフェース(`Counter`)に修正したので、機能実態オブジェクトをバインドする必要があります。  
-そしてカウンタ機能実装クラス(`CounterImpl`)のオブジェクト生成は、DIコンテナに集約生成させるようにしたので、
-`_counter`フィールドの下にコードを追加します。  
+そしてカウンタ機能実装クラス(`CounterImpl`)のオブジェクト生成は、DIコンテナに集約生成させるようにしたので、  
+`_counter`フィールドの下に（新規追加）のコードを実装します。  
 _・画面表示前の `initState`では、**DIコンテナのシングルトンを使って、カウンタ機能オブジェクトを生成**させています。_  
 _・画面破棄前の `dispose`では、**メモリリークをおこさないよう、DIコンテナが保持管理していたオブジェクトを全クリア**させています。_
 
@@ -260,6 +260,7 @@ DIコンテナをオブジェクト生成に使いましたが、現時点では
 ### テストコード実行
 
 テスト実行結果  
+
 <img src="../../../docs/images/step2_test.png" width="600" style="border: solid #c0c0c0;" />
 - テストに成功した事はわかりますが、テストされたときのカウント値はわかりません。
 
