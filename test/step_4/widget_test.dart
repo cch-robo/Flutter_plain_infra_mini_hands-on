@@ -54,6 +54,34 @@ void main() {
     expect(find.text('1'), findsNothing);
     expect(find.text('100'), findsOneWidget);
   });
+
+  // TODO add line start.
+  testWidgets('Counter increments reference test', (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
+
+    CounterDiContainer di = CounterDiContainer.singleton;
+    int id = di.listUpIds().first;
+
+    // アプリ内で生成された、カウンタ機能オブジェクトの参照を取得する。
+    Injectable<ReferencableCounter> injector = di.getInjector(id);
+    ReferencableCounter reference = injector.reference!;
+
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
+
+    // Tap the '+' icon and trigger a frame.
+    reference.count = 99;
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    // Verify that our counter has incremented.
+    expect(find.text('0'), findsNothing);
+    expect(find.text('1'), findsNothing);
+    expect(find.text('100'), findsOneWidget);
+  });
+  // TODO add line end.
 }
 
 /// DI コンテナを介して参照可能で、動的注入されるモックオブジェクト
