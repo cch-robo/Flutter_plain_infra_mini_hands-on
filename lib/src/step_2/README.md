@@ -261,7 +261,7 @@ DIコンテナをオブジェクト生成に使いましたが、現時点では
 ### テストコード実行
 
 テスト実行結果  
-<img src="../../../docs/images/step2_test.png" width="600" />
+<img src="../../../docs/images/step2_test.png" width="600" style="border: solid #c0c0c0;" />
 - テストに成功した事はわかりますが、テストされたときのカウント値はわかりません。
 
 - テストに失敗した場合は、ハンズオン作業後の `step_2`のコードと
