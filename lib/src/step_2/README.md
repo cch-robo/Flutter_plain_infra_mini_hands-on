@@ -5,8 +5,8 @@
 
 
 ## ハンズオン作業前のコード内容確認
-ハンズオン作業前(コードの追加修正前)のコード内容は、step_1 をベースにしています。  
-このため [lib/src/step_2/counter_page.dart](./counter_page.dart) のコード内容は、step_1 と同じです。  
+ハンズオン作業前(コードの追加修正前)のコード内容は、`step_1` をベースにしています。  
+このため [lib/src/step_2/counter_page.dart](./counter_page.dart) のコード内容は、`step_1` と同じです。  
 [lib/src/step_2/counter_di.dart](./counter_di.dart) には、カウント機能の依存元や DIコンテナのコードを追加します。  
 
 - IDEで、この`README.md`と同じディレクトリにある [lib/src/step_2/counter_di.dart](./counter_di.dart) と、  
@@ -244,14 +244,14 @@ _・画面破棄前の `dispose`では、**メモリリークをおこさない�
 - FAB(`+`)をタップすると、画面中央のカウント値が＋１されます。
 
 _DIコンテナでカウンタ機能オブジェクトを生成させるよう修正しましたが、_  
-_カウンタ機能はオリジナルと変わりませんし、依存注入もできないので、挙動は step_1 と変わりません。_  
+_カウンタ機能はオリジナルと変わりませんし、依存注入もできないので、挙動は `step_1` と変わりません。_  
 
 - 実行できなかった場合は、ハンズオン作業後の `step_2`のコードと
 ハンズオン完成コード（[lib/src/stepstep_di_creatable/](../step_di_creatable/)）と比較してみてください。
 
 
 ## テストコード確認
-ブラウザか IDEで、step_2のテストコード ⇒ [test/step_2/widget_test.dart](../../../test/step_2/widget_test.dart) を確認します。
+ブラウザか IDEで、`step_2`のテストコード ⇒ [test/step_2/widget_test.dart](../../../test/step_2/widget_test.dart) を確認します。
 
 
 ### テストコード確認ポイント
