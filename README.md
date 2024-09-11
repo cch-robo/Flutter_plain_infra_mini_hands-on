@@ -64,7 +64,7 @@ void main() {
   ブラウザまたは IDEで、step_1の [README.md](lib/src/step_1/README.md) を開き、説明を確認してください。  
 
 5. 次のステップ  
-  step_2や step_3も、2〜4と同じ手順で進めます。
+  step_2 〜 step_4 も、2〜4と同じ手順で進めます。
 
 
 ### 2. DartPad を利用されるかた
@@ -83,7 +83,7 @@ void main() {
    ブラウザまで、step_1の [README.md](lib/src/step_1/README.md) を開き、説明を確認してください。  
 
 5. 次のステップ  
-   step_2や step_3も、2〜4と同じ手順で進めます。
+   step_2 〜 step_4 も、2〜4と同じ手順で進めます。
 
 
 ## [Flutter Brand Guidelines](https://docs.flutter.dev/brand#community-use-exceptions)
