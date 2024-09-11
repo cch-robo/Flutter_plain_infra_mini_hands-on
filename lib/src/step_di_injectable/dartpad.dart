@@ -113,8 +113,8 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
     }
     // デバッグモードの場合のみ Dependency Inject 可能にします。
     CounterDouble counter = CounterDouble._();
-    CounterImpl inject = CounterImpl._();
-    counter.init(inject);
+    CounterImpl reference = CounterImpl._();
+    counter.init(reference);
     super.addContainer(counter.id, counter);
     return counter;
     // TODO modify line end.
@@ -201,7 +201,7 @@ abstract interface class Injectable<T extends Referencable> implements Referenca
   @override
   int get id;
 
-  void init(T inject);
+  void init(T reference);
 
   void dispose();
 
@@ -209,7 +209,7 @@ abstract interface class Injectable<T extends Referencable> implements Referenca
 
   bool get hasReference;
 
-  T swap(T inject);
+  T swap(T reference);
 }
 
 /// 依存実態の生成と注入を行う Dependency Inject コンテナ・オブジェクトの基底インターフェース
@@ -228,7 +228,7 @@ abstract interface class DependencyInjector<T, RT extends Referencable, IT exten
 
   void deleteInjector(int id);
 
-  RT swapReference(int id, RT inject);
+  RT swapReference(int id, RT reference);
 
   void deleteAll();
 
@@ -269,8 +269,8 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
   late final int id;
 
   @override
-  void init(T inject) {
-    _reference = inject;
+  void init(T reference) {
+    _reference = reference;
     id = _reference!.id;
   }
 
@@ -283,10 +283,10 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
   bool get hasReference => _reference != null;
 
   @override
-  T swap(T inject) {
+  T swap(T reference) {
     if (_reference == null) throw DefaultError('');
     T temp = _reference!;
-    _reference = inject;
+    _reference = reference;
     return temp;
   }
 }
@@ -343,9 +343,9 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   ///     }
   ///     // デバッグモードの場合のみ動的 Dependency Inject 可能にします。
   ///     CounterDouble counter = CounterDouble._();
-  ///     CounterImpl inject = CounterImpl._();
-  ///     counter.init(inject);
-  ///     addContainer(counter.id, counter);
+  ///     CounterImpl reference = CounterImpl._();
+  ///     counter.init(reference);
+  ///     super.addContainer(counter.id, counter);
   ///     return counter;
   ///   }
   /// ```
@@ -365,7 +365,6 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   /// ```
   @override
   void addContainer(int id, T object) {
-    checkDebugMode();
     _repo[id] = object;
   }
 
@@ -392,9 +391,9 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   }
 
   @override
-  RT swapReference(int id, RT inject) {
+  RT swapReference(int id, RT reference) {
     IT instance = getInjector(id);
-    return instance.swap(inject) as RT;
+    return instance.swap(reference) as RT;
   }
 
   @override
