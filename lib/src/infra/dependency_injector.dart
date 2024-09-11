@@ -43,7 +43,7 @@ abstract interface class DependencyInjector<T, RT extends Referencable, IT exten
 
   RT swapReference(int id, RT inject);
 
-  void deleteAllInjector();
+  void deleteAll();
 
   bool checkDebugMode({bool isThrowError = true});
 }
@@ -112,7 +112,7 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
 ///
 /// ```dart
 ///   // 注入禁止要請フラグ
-///   static bool isNoUseInject = false;
+///   static bool isForbiddenInject = false;
 ///
 ///   // シングルトン・インスタンス
 ///   static SampleDependencyInjector? _singletonInstance;
@@ -133,9 +133,6 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
 /// ```
 abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends Injectable>
     implements DependencyInjector<T, RT, IT> {
-  /// 注入禁止フラグ
-  late final bool isForbiddenInject;
-
   final Map<int, T> _repo = {};
 
   /// 機能実態オブジェクト生成
@@ -214,19 +211,16 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   }
 
   @override
-  void deleteAllInjector() {
+  void deleteAll() {
     checkDebugMode();
     for (T instance in _repo.values) {
-      (instance as IT).dispose();
+      if (instance is IT) (instance as IT).dispose();
     }
     _repo.clear();
   }
 
   @override
   bool checkDebugMode({bool isThrowError = true}) {
-    if (kDebugMode && isForbiddenInject) {
-      throw DefaultError('Dependency Injection methods are forbidden to use.');
-    }
     if (!kDebugMode && isThrowError) {
       throw DefaultError('Dependency Injection methods can use to only Debug mode.');
     }
