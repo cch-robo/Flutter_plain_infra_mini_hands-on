@@ -126,7 +126,7 @@ class CounterImpl extends AbstractReferencable implements ReferencableCounter {
 このため、定義する DIコンテナの実装クラスは、**オブジェクトの生成ができても依存注入はできない**ことに注意ください。  
 
 予め **カウンタ機能の DIコンテナ** の `CounterDiContainer`クラスを定義していますので、これに実装を追加します。  
-_DIコンテナのインフラ・ライブラリ([dependency_injector.dart](../infra/dependency_injector.dart))と連携するよう、
+_DIコンテナのインフラ・ライブラリ([dependency_injector.dart](../infra/dependency_injector.dart))と連携するよう、  
 `AbstractDependencyInjector`抽象クラスを継承させてください。_
 
 **【修正前】**
@@ -249,8 +249,9 @@ _・画面破棄前の `dispose`では、**メモリリークをおこさない�
 _DIコンテナでカウンタ機能オブジェクトを生成させるよう修正しましたが、_  
 _カウンタ機能はオリジナルと変わりませんし、依存注入もできないので、挙動は `step_1` と変わりません。_  
 
-- 実行できなかった場合は、ハンズオン作業後の `step_2`のコードと
-ハンズオン完成コード（[lib/src/stepstep_di_creatable/](../step_di_creatable/)）と比較してみてください。
+- 実行できなかった場合は、  
+ハンズオン作業後の `step_2`のコードと
+ハンズオン完成コード（[lib/src/stepstep_di_creatable/](../step_di_creatable/)）とを比較してみてください。
 
 
 ## テストコード確認
@@ -258,7 +259,8 @@ _カウンタ機能はオリジナルと変わりませんし、依存注入も�
 
 
 ### テストコード確認ポイント
-DIコンテナをオブジェクト生成に使いましたが、現時点では依存注入機能が使えないので、オリジナルのテストコードからの変化はありません。  
+DIコンテナをオブジェクト生成に使いましたが、  
+現時点では依存注入機能が使えないので、オリジナルのテストコードからの変化はありません。  
 
 
 ### テストコード実行
