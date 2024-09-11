@@ -178,7 +178,9 @@ import '../infra/dependency_injector.dart';
 ```
 
 
-### カウンタ画面で、DIコンテナを使うよう修正
+## ハンズオン作業<br/>カウンタ画面のコードを修正する。
+
+### カウンタ画面における、DIコンテナを使ったオブジェクト生成
 - IDEで [counter_page.dart](./counter_page.dart) を開いて、DIコンテナを利用するように修正します。  
   _`DartPad`を使われている方は、引き続きブラウザで作業を続けてください。_
 
