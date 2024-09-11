@@ -1,5 +1,5 @@
 // 依存を分離するため、カウンター機能（状態オブジェクト）を、DI コンテナから取得させます。
-// 状態オブジェクトを直接生成（ハードコード）していないため、注入依存が差替可能になります。
+// 状態オブジェクトを直接生成（ハードコード）していませんが、DIコンテナは依存注入に対応していません。
 
 import 'package:flutter/material.dart';
 
@@ -40,6 +40,7 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   */
   late Counter _counter;
+
   // TODO modify line end.
 
   // TODO add line start.
@@ -53,9 +54,10 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     var di = CounterDiContainer.singleton;
-    di.deleteAllInjector();
+    di.deleteAll();
     super.dispose();
   }
+
   // TODO add line end.
 
   void _incrementCounter() {
@@ -84,12 +86,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              // TODO modify line start.
-              /*
-              '$_counter',
-              */
               '${_counter.count}',
-              // TODO modify line end.
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
