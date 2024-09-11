@@ -40,7 +40,6 @@ class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
   */
   late Counter _counter;
-
   // TODO modify line end.
 
   // TODO add line start.
@@ -57,7 +56,6 @@ class _MyHomePageState extends State<MyHomePage> {
     di.deleteAll();
     super.dispose();
   }
-
   // TODO add line end.
 
   void _incrementCounter() {
