@@ -176,6 +176,7 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
 import '../infra/default_error.dart';
 import '../infra/dependency_injector.dart';
 ```
+_`DartPad`では、追加不要です。_
 
 
 ## ハンズオン作業<br/>カウンタ画面のコードを修正する。
