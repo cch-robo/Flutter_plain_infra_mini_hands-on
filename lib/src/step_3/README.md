@@ -22,10 +22,11 @@
   _`DartPad`を使われている方は、ブラウザで [lib/src/step_2/dartpad.dart](./dartpad.dart) を開いて、_  
   _全コードをクリップボードにコピーしてから、ブラウザの [DartPad](https://dartpad.dev) にペーストしてください。_
 
-`step_2`で、依存元の`ReferencableCounter`インターフェースと実装の`CounterImpl`クラス、注入先の`InjectableCounter`インターフェースを定義したので、  
+`step_2`で、  
+依存元の`ReferencableCounter`インターフェースと実装の`CounterImpl`クラス、注入先の`InjectableCounter`インターフェースを定義したので、  
 これから注入先の `CounterDouble`クラスを定義して、**外部からのメッセージを依存元に処理させるだけの`Proxy`** を作ることにします。  
 
-注入先となる `CounterDouble`クラスには、依存元の`CounterImpl`オブジェクトが注入されるので、
+注入先となる `CounterDouble`クラスには、依存元の`CounterImpl`オブジェクトが注入されるので、  
 下記のように `ReferencableCounter`インターフェースと `InjectableCounter`インターフェースの実装が必要になります。
 
 **【実装想定】**
@@ -39,7 +40,7 @@ class CounterDouble implements ReferencableCounter, InjectableCounter {
 ```
 
 ですが、`step_2`で説明したように、
-DIコンテナのインフラ・ライブラリ([dependency_injector.dart](../infra/dependency_injector.dart))がありますので、
+DIコンテナのインフラ・ライブラリ([dependency_injector.dart](../infra/dependency_injector.dart))がありますので、  
 外部からのメッセージを依存元に処理させるだけなら、下記のような最低限の実装で済みます。
 
 **【新規追加】**
@@ -70,7 +71,8 @@ class CounterDouble extends AbstractInjectable<ReferencableCounter> implements I
 
 ### DIコンテナの createメソッドに依存注入コードを追加
 
-`step_2`では、DIコンテナ(`CounterDiContainer`)の`create`メソッドに**依存元オブジェクトの生成**と **コンテナへの保持管理**を実装しています。  
+`step_2`では、  
+DIコンテナ(`CounterDiContainer`)の`create`メソッドに**依存元オブジェクトの生成**と **コンテナへの保持管理**を実装しています。  
 注入先クラスを定義したので、メソッドに **注入先オブジェクトの生成**と **依存元オブジェクトの注入** を追加するコード修正を行います。  
 
 **【修正前】**
@@ -111,7 +113,8 @@ class CounterDouble extends AbstractInjectable<ReferencableCounter> implements I
 _DIコンテナによりカウンタ機能オブジェクト(**依存元**と**注入先**)が生成され、アプリには**注入先**がバインドされますが、_  
 _**依存元**も **注入先**も、カウンタ機能はオリジナルと変わないので、挙動は `step_1`や `step_2`と変わりません。_  
 
-- 実行できなかった場合は、ハンズオン作業後の `step_3`のコードと
+- 実行できなかった場合は、  
+  ハンズオン作業後の `step_3`のコードと
   ハンズオン完成コード（[lib/src/step_di_injectable/](../step_di_injectable/)）と比較してみてください。
 
 
@@ -124,7 +127,8 @@ _**依存元**も **注入先**も、カウンタ機能はオリジナルと変�
 この DIコンテナの特色として、依存元(カウンタ機能オブジェクト)を動的に差し替えることもできます。
 
 テストコードでは、アプリで生成されたカウンタ機能オブジェクトと テスト用モックのオブジェクトとを差し替え、  
-テストコードからモックのカウンタ値を `99`に設定することで、 課題として上げていた **「カウント値が 100になったときのテスト」** を行っています。
+テストコードからモックのカウンタ値を `99`に設定することで、  
+課題として上げていた **「カウント値が 100になったときのテスト」** を行っています。
 
 この対応のために、`MockCounter`クラスと、`testWidgets('Counter increments mock test'`パターンを追加しています。
 
@@ -185,7 +189,8 @@ class MockCounter extends AbstractReferencable implements ReferencableCounter {
 <img src="../../../docs/images/step3_test.png" width="600" style="border: solid #c0c0c0;" />
 - テストに成功した事はわかりますが、テストされたときのカウント値はわかりません。
 
-- テストに失敗した場合は、ハンズオン作業後の `step_3`のコードと
+- テストに失敗した場合は、  
+  ハンズオン作業後の `step_3`のコードと
   ハンズオン完成コード（[lib/src/step_di_injectable/](../step_di_injectable/)）とを比較してみてください。
 
 
