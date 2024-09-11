@@ -4,12 +4,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:infra/src/infra/dependency_injector.dart';
-import 'package:infra/src/step_3/counter_di.dart';
-import 'package:infra/src/step_3/counter_page.dart';
+import 'package:infra/src/step_4/counter_di.dart';
+import 'package:infra/src/step_4/counter_page.dart';
 /*
-import 'package:infra/src/step_di_injectable/counter_di.dart';
-import 'package:infra/src/step_di_injectable/counter_page.dart';
+import 'package:infra/src/step_di_usage/counter_di.dart';
+import 'package:infra/src/step_di_usage/counter_page.dart';
 */
+
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
@@ -29,7 +30,6 @@ void main() {
     expect(find.text('1'), findsOneWidget);
   });
 
-  // TODO add line start.
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
     await tester.pumpWidget(const MyApp());
@@ -54,10 +54,8 @@ void main() {
     expect(find.text('1'), findsNothing);
     expect(find.text('100'), findsOneWidget);
   });
-  // TODO add line end.
 }
 
-// TODO add line start.
 /// DI コンテナを介して参照可能で、動的注入されるモックオブジェクト
 ///
 /// _テストコードから値読み出しや状態更新など操作可能_
@@ -76,4 +74,3 @@ class MockCounter extends AbstractReferencable implements ReferencableCounter {
   @override
   void increment() => count++;
 }
-// TODO add line end.
