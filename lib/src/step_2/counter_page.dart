@@ -3,8 +3,6 @@
 
 import 'package:flutter/material.dart';
 
-import 'counter_di.dart';
-
 void main() {
   runApp(const MyApp());
 }
@@ -35,39 +33,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  // TODO modify line start.
-  /*
   int _counter = 0;
-  */
-  late Counter _counter;
-
-  // TODO modify line end.
-
-  // TODO add line start.
-  @override
-  void initState() {
-    super.initState();
-    var di = CounterDiContainer.singleton;
-    _counter = di.create();
-  }
-
-  @override
-  void dispose() {
-    var di = CounterDiContainer.singleton;
-    di.deleteAll();
-    super.dispose();
-  }
-
-  // TODO add line end.
 
   void _incrementCounter() {
     setState(() {
-      // TODO modify line start.
-      /*
       _counter++;
-      */
-      _counter.increment();
-      // TODO modify line end.
     });
   }
 
@@ -86,7 +56,7 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have pushed the button this many times:',
             ),
             Text(
-              '${_counter.count}',
+              '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
           ],
