@@ -7,7 +7,7 @@
 ## ハンズオン作業前のコード内容確認
 ハンズオン作業前(コードの追加修正前)のコード内容は、`step_2` ハンズオン作業後をベースにしています。  
 このため [lib/src/step_3/counter_page.dart](./counter_page.dart) と 
-[lib/src/step_3/counter_di.dart](./counter_di.dart) には、`step_2` からのコード差分の追加修正を行います。
+[lib/src/step_3/counter_di.dart](./counter_di.dart) に、`step_2`からの差分実装をこれから行います。
 
 - IDEで、この`README.md`と同じディレクトリにある [lib/src/step_3/counter_di.dart](./counter_di.dart) と、  
   [lib/src/step_3/counter_page.dart](./counter_page.dart) を開いてください。  
@@ -99,8 +99,8 @@ DIコンテナ(`CounterDiContainer`)の`create`メソッドに**依存元オブ�
     }
     // デバッグモードの場合のみ Dependency Inject 可能にします。
     CounterDouble counter = CounterDouble._();
-    CounterImpl inject = CounterImpl._();
-    counter.init(inject);
+    CounterImpl reference = CounterImpl._();
+    counter.init(reference);
     super.addContainer(counter.id, counter);
     return counter;
   }
