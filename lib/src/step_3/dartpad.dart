@@ -32,19 +32,19 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  late CounterDiContainer _di;
   late Counter _counter;
 
   @override
   void initState() {
     super.initState();
-    _di = CounterDiContainer.singleton;
-    _counter = _di.create();
+    var di = CounterDiContainer.singleton;
+    _counter = di.create();
   }
 
   @override
   void dispose() {
-    _di.deleteAllInjector();
+    var di = CounterDiContainer.singleton;
+    di.deleteAll();
     super.dispose();
   }
 
@@ -85,11 +85,6 @@ class _MyHomePageState extends State<MyHomePage> {
 }
 
 
-// カウンター機能を Dependency Inject コンテナ対応にする。
-//
-// 依存注入先クラスは、注入された機能実装を提供するだけでなく、
-// 特定メソド実行時のログ出力など..仕様機能にない要件の追加にも利用できます。
-
 /// Counter オブジェクトの DIコンテナ・クラス
 class CounterDiContainer extends AbstractDependencyInjector<Counter, ReferencableCounter, InjectableCounter> {
   /// シングルトン・インスタンス
@@ -110,9 +105,10 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
   /// Counter オブジェクト生成
   @override
   Counter create() {
+    // TODO modify line start.
     if (!checkDebugMode(isThrowError: false)) {
+      // デバッグモードでないので Dependency Inject を利用させません。
       CounterImpl counter = CounterImpl._();
-      super.addContainer(counter.id, counter);
       return counter;
     }
     // デバッグモードの場合のみ Dependency Inject 可能にします。
@@ -121,6 +117,7 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
     counter.init(inject);
     super.addContainer(counter.id, counter);
     return counter;
+    // TODO modify line end.
   }
 
   /// 使用禁止
@@ -130,6 +127,7 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
   }
 }
 
+// TODO add line start.
 /// DI から依存元を注入可能な Counter クラス
 ///
 /// _機能実態が注入されるため、機能実現は注入元に任せ、_<br/>
@@ -142,10 +140,6 @@ class CounterDouble extends AbstractInjectable<ReferencableCounter> implements I
 
   @override
   int get count {
-    // TODO add line start.
-    // デバッグ用に、機能仕様と関係のないカウント値のログ出力を追加
-    debugLog('count=${reference!.count}');
-    // TODO add line end.
     return reference!.count;
   }
 
@@ -153,11 +147,9 @@ class CounterDouble extends AbstractInjectable<ReferencableCounter> implements I
   set count(int value) => reference!.count = value;
 
   @override
-  void clear() => reference!.clear();
-
-  @override
   void increment() => reference!.increment();
 }
+// TODO add line end.
 
 /// DI から依存元として参照可能な Counter クラス
 class CounterImpl extends AbstractReferencable implements ReferencableCounter {
@@ -178,9 +170,6 @@ class CounterImpl extends AbstractReferencable implements ReferencableCounter {
   set count(int value) => _value = value;
 
   @override
-  void clear() => _value = 0;
-
-  @override
   void increment() => count++;
 }
 
@@ -196,11 +185,8 @@ abstract interface class Counter {
 
   set count(int value);
 
-  void clear();
-
   void increment();
 }
-
 
 
 /// 依存実態として注入される（参照可能）なオブジェクトの基底インターフェース
@@ -244,7 +230,7 @@ abstract interface class DependencyInjector<T, RT extends Referencable, IT exten
 
   RT swapReference(int id, RT inject);
 
-  void deleteAllInjector();
+  void deleteAll();
 
   bool checkDebugMode({bool isThrowError = true});
 }
@@ -312,6 +298,9 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
 /// _プライベート・コンストラクタを実装してください。_<br/>
 ///
 /// ```dart
+///   // 注入禁止要請フラグ
+///   static bool isForbiddenInject = false;
+///
 ///   // シングルトン・インスタンス
 ///   static SampleDependencyInjector? _singletonInstance;
 ///
@@ -325,7 +314,9 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
 ///   }
 ///
 ///   // プライベート・コンストラクタ
-///   SampleDependencyInjector._();
+///   SampleDependencyInjector._() ｛
+///     isForbiddenInject = isNoUseInject;
+///   ｝
 /// ```
 abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends Injectable>
     implements DependencyInjector<T, RT, IT> {
@@ -345,9 +336,9 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   ///   //
   ///   @override
   ///   Counter create() {
-  ///     if (!checkDebugMode(isThrowError: false)) {
+  ///     if (!checkDebugMode(isThrowError: false) || isForbiddenInject) {
+  ///       // デバッグモードでないか注入禁止なので Dependency Inject を利用させません。
   ///       CounterImpl counter = CounterImpl._();
-  ///       addContainer(counter.id, counter);
   ///       return counter;
   ///     }
   ///     // デバッグモードの場合のみ動的 Dependency Inject 可能にします。
@@ -365,7 +356,7 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   ///
   /// _このメソッドは、[create] のヘルパー・メソッドのため、_<br/>
   /// _[create]実装内で、`super.addContainer()` のようにして利用します。_<br/>
-  /// _派生先で不用意に使われないよう、以下のようにオーバーライドして使用禁止にしてください。_<br/>
+  /// _派生先では、不用意に使われないよう、以下のようにオーバーライドして使用禁止にしてください。_<br/>
   /// ```dart
   ///  @override
   ///  void addContainer(int id, T object) {
@@ -374,6 +365,7 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   /// ```
   @override
   void addContainer(int id, T object) {
+    checkDebugMode();
     _repo[id] = object;
   }
 
@@ -406,21 +398,16 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   }
 
   @override
-  void deleteAllInjector() {
+  void deleteAll() {
     checkDebugMode();
     for (T instance in _repo.values) {
-      (instance as IT).dispose();
+      if (instance is IT) (instance as IT).dispose();
     }
     _repo.clear();
   }
 
   @override
   bool checkDebugMode({bool isThrowError = true}) {
-    /*
-    if (false && isThrowError) {
-      throw DefaultError('Dependency Injection methods can use to only Debug mode.');
-    }
-    */
     return true;
   }
 }
@@ -589,13 +576,13 @@ class DebugLog {
 /// - [cause] : （オプション）エラーまたは例外型を明示して出力元情報補助を行います。<br/>
 /// _[Error]型が指定されていた場合は、[StackTrace]出力も伴います。_
 void debugLog(String message, {Object? info, Object? cause}) {
-  if ((DebugLog.isDebugMode || cause != null) && true) {
+  if ((DebugLog.isDebugMode || cause != null)) {
     debugPrint(createDebugLogText(message, info: info, cause: cause));
   }
 }
 
 String createDebugLogText(String message, {Object? info, Object? cause}) {
-  if ((DebugLog.isDebugMode || cause != null) && true) {
+  if ((DebugLog.isDebugMode || cause != null)) {
     StringBuffer sb = StringBuffer();
     // メッセージ表示
     if (info != null) {

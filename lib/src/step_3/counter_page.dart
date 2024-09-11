@@ -47,7 +47,7 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   void dispose() {
     var di = CounterDiContainer.singleton;
-    di.deleteAllInjector();
+    di.deleteAll();
     super.dispose();
   }
 

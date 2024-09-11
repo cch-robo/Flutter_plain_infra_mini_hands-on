@@ -1,17 +1,13 @@
 // カウンター機能を Dependency Inject コンテナ対応にする。
 //
-// 依存注入先クラスは、注入された機能実装を提供するだけでなく、
-// 特定メソド実行時のログ出力など..仕様機能にない要件の追加にも利用できます。
+// カウンター機能は、仕様基底インターフェースと、仕様実装クラスおよび、
+// 機能実装を注入するクラスを追加して、DI コンテナで依存注入できるようにします。
 
-import '../infra/debug_logger.dart';
 import '../infra/default_error.dart';
 import '../infra/dependency_injector.dart';
 
 /// Counter オブジェクトの DIコンテナ・クラス
 class CounterDiContainer extends AbstractDependencyInjector<Counter, ReferencableCounter, InjectableCounter> {
-  /// 注入禁止要請フラグ
-  static bool isNoUseInject = false;
-
   /// シングルトン・インスタンス
   static CounterDiContainer? _singletonInstance;
 
@@ -25,22 +21,13 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
   }
 
   /// プライベート・コンストラクタ
-  CounterDiContainer._() {
-    isForbiddenInject = isNoUseInject;
-  }
+  CounterDiContainer._();
 
   /// Counter オブジェクト生成
   @override
   Counter create() {
-    if (!checkDebugMode(isThrowError: false) || isForbiddenInject) {
-      // デバッグモードでないか注入禁止なので Dependency Inject を利用させません。
-      CounterImpl counter = CounterImpl._();
-      return counter;
-    }
-    // デバッグモードの場合のみ Dependency Inject 可能にします。
-    CounterDouble counter = CounterDouble._();
-    CounterImpl inject = CounterImpl._();
-    counter.init(inject);
+    // オブジェクトを生成しますが、Dependency Inject は利用できません。
+    CounterImpl counter = CounterImpl._();
     super.addContainer(counter.id, counter);
     return counter;
   }
@@ -50,32 +37,6 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
   void addContainer(int id, Counter object) {
     throw DefaultError('This method can use to only from the create method.');
   }
-}
-
-/// DI から依存元を注入可能な Counter クラス
-///
-/// _機能実態が注入されるため、機能実現は注入元に任せ、_<br/>
-/// _Analytics ログ出力などの機能仕様にない要件追加に利用できます。_<br/>
-class CounterDouble extends AbstractInjectable<ReferencableCounter> implements InjectableCounter {
-  /// プライベート・コンストラクタ
-  ///
-  /// _DI コンテナを介してしか生成できないことに留意_
-  CounterDouble._();
-
-  @override
-  int get count {
-    // TODO add line start.
-    // デバッグ用に、機能仕様と関係のないカウント値のログ出力を追加
-    debugLog('count=${reference!.count}');
-    // TODO add line end.
-    return reference!.count;
-  }
-
-  @override
-  set count(int value) => reference!.count = value;
-
-  @override
-  void increment() => reference!.increment();
 }
 
 /// DI から依存元として参照可能な Counter クラス
