@@ -266,7 +266,8 @@ DIコンテナをオブジェクト生成に使いましたが、現時点では
 <img src="../../../docs/images/step2_test.png" width="600" style="border: solid #c0c0c0;" />
 - テストに成功した事はわかりますが、テストされたときのカウント値はわかりません。
 
-- テストに失敗した場合は、ハンズオン作業後の `step_2`のコードと
+- テストに失敗した場合は、  
+  ハンズオン作業後の `step_2`のコードと
   ハンズオン完成コード（[lib/src/stepstep_di_creatable/](../step_di_creatable/)）とを比較してみてください。
 
 
