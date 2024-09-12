@@ -10,7 +10,10 @@ import 'src/step_2/counter_page.dart' as step_2;
 import 'src/step_3/counter_page.dart' as step_3;
 
 // step.4:依存実態をラップした注入先にカウント値のログ出力を追加します。
-import 'src/step_3/counter_page.dart' as step_4;
+import 'src/step_4/counter_page.dart' as step_4;
+
+// step.5:簡易DIコンテナによる依存注入のまとめ。
+import 'src/step_5/counter_page.dart' as step_5;
 
 void main() {
   step_1.main();
