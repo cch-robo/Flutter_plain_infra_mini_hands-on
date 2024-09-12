@@ -86,6 +86,10 @@ void main() {
    step_2 〜 step_4 も、2〜4と同じ手順で進めます。
 
 
+## ミニハンズオンに進む
+こちらから [step_1](lib/src/step_1/README.md) へ進めます。
+
+
 ## [Flutter Brand Guidelines](https://docs.flutter.dev/brand#community-use-exceptions)
 - “Flutter and the related logo are trademarks of Google LLC. FlutterKaigi is not affiliated with or otherwise sponsored by Google LLC.”
 - "Flutterおよび関連するロゴは、Google LLC の商標です。FlutterKaigi は、Google LLC との提携および、Google LLC が後援しているものでもないことに御留意下さい。”
