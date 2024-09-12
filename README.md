@@ -87,7 +87,7 @@ void main() {
 
 
 ## ミニハンズオンに進む
-こちらから [step_1](lib/src/step_1/README.md) へ進めます。
+こちらから [step_1](lib/src/step_1/README.md) に進んでください。
 
 
 ## [Flutter Brand Guidelines](https://docs.flutter.dev/brand#community-use-exceptions)

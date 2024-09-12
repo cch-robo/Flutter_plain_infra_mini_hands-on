@@ -193,3 +193,7 @@ class MockCounter extends AbstractReferencable implements ReferencableCounter {
 1. テストに成功した事はわかりますが、テストされたときのカウント値はわかりません。
 
 2. ボイラープレート・コードは、将来的にマクロなどでの自動生成が必要でしょう。
+
+
+## 次のステップへ
+こちらから [step_4](../step_4/README.md) に進んでください。
