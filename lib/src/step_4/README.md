@@ -140,6 +140,7 @@ class DarkMagicCounter extends AbstractInjectable<ReferencableCounter>
 }
 ```
 
+**【新規追加】**
 ```dart
   testWidgets('Counter increments dark magic test',
       (WidgetTester tester) async {
