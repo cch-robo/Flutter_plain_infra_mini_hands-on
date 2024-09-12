@@ -35,6 +35,8 @@ abstract interface class DependencyInjector<T, RT extends Referencable, IT exten
 
   void addContainer(int id, T object);
 
+  bool get isForbiddenDynamicOperation;
+
   List<int> listUpIds();
 
   IT getInjector(int id);
@@ -111,8 +113,8 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
 /// _プライベート・コンストラクタを実装してください。_<br/>
 ///
 /// ```dart
-///   // 注入禁止要請フラグ
-///   static bool isForbiddenInject = false;
+///   // 動的操作禁止要請フラグ
+///   static bool isNoUseDynamicOperation = false;
 ///
 ///   // シングルトン・インスタンス
 ///   static SampleDependencyInjector? _singletonInstance;
@@ -128,7 +130,7 @@ abstract class AbstractInjectable<T extends Referencable> implements Injectable<
 ///
 ///   // プライベート・コンストラクタ
 ///   SampleDependencyInjector._() ｛
-///     isForbiddenInject = isNoUseInject;
+///     isForbiddenDynamicOperation = isNoUseDynamicOperation;
 ///   ｝
 /// ```
 abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends Injectable>
@@ -149,12 +151,7 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   ///   //
   ///   @override
   ///   Counter create() {
-  ///     if (!checkDebugMode(isThrowError: false) || isForbiddenInject) {
-  ///       // デバッグモードでないか注入禁止なので Dependency Inject を利用させません。
-  ///       CounterImpl counter = CounterImpl._();
-  ///       return counter;
-  ///     }
-  ///     // デバッグモードの場合のみ動的 Dependency Inject 可能にします。
+  ///     // 依存注入 Dependency Inject を行います。
   ///     CounterDouble counter = CounterDouble._();
   ///     CounterImpl reference = CounterImpl._();
   ///     counter.init(reference);
@@ -180,6 +177,9 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
   void addContainer(int id, T object) {
     _repo[id] = object;
   }
+
+  @override
+  late bool isForbiddenDynamicOperation;
 
   @override
   List<int> listUpIds() {
@@ -211,7 +211,6 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
 
   @override
   void deleteAll() {
-    checkDebugMode();
     for (T instance in _repo.values) {
       if (instance is IT) (instance as IT).dispose();
     }
@@ -220,6 +219,9 @@ abstract class AbstractDependencyInjector<T, RT extends Referencable, IT extends
 
   @override
   bool checkDebugMode({bool isThrowError = true}) {
+    if (isForbiddenDynamicOperation) {
+      throw DefaultError('Dependency Injection methods are forbidden to use.');
+    }
     if (!kDebugMode && isThrowError) {
       throw DefaultError('Dependency Injection methods can use to only Debug mode.');
     }
