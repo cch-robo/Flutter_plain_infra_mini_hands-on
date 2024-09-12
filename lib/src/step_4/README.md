@@ -15,7 +15,7 @@
   _`DartPad`を使われている方は、ブラウザで開いてください。_
 
 
-## ハンズオン作業<br/>DIコンテナや注入先クラスに、機能仕様にない要件を追加する。
+## ハンズオン作業<br/>注入先クラスに、機能仕様にない要件を追加する。
 
 ### 注入先クラスに、カウンタ値のログ出力を追加
 
@@ -50,56 +50,6 @@ _注入先への追加要件のコード追加により、
     // デバッグ用に、機能仕様と関係のないカウント値のログ出力を追加
     debugLog('count=${reference!.count}');
     return reference!.count;
-  }
-```
-
-
-### DIコンテナに、依存注入の禁止設定を追加（オプション）
-
-`step_3`の実装でもリリースモードでビルドすれば、依存注入が自動的に無視(禁止)されます。  
-ですがリリースモードでビルドするまで「アプリ内での DIコンテナ・注入先操作」が見落されないようフラグを追加してみます。  
-
-DIコンテナ(`CounterDouble`)のオブジェクトは、シングルトンにしているため、  
-クラスの最上行に静的フラグ `isForbiddenInject`を追加します。  
-
-**【新規追加】**
-```dart
-  /// 注入禁止要請フラグ
-  static bool isForbiddenInject = false;
-```
-
-DIコンテナ(`CounterDouble`)の依存注入は、`create`メソッドで行っているので、  
-依存注入禁止 ⇒ Dependency Inject を利用させない条件に `isForbiddenInject`を追加します。  
-
-**【修正前】**
-```dart
-  /// Counter オブジェクト生成
-  @override
-  Counter create() {
-    if (!checkDebugMode(isThrowError: false)) {
-      // デバッグモードでないので Dependency Inject を利用させません。
-      CounterImpl counter = CounterImpl._();
-      return counter;
-    }
-    // デバッグモードの場合のみ Dependency Inject 可能にします。
-    /* 〜 省略 〜 */
-    return counter;
-  }
-```
-
-**【修正後】**
-```dart
-  /// Counter オブジェクト生成
-  @override
-  Counter create() {
-    if (!checkDebugMode(isThrowError: false) || isForbiddenInject) {
-      // デバッグモードでないか注入禁止なので Dependency Inject を利用させません。
-      CounterImpl counter = CounterImpl._();
-      return counter;
-    }
-    // デバッグモードの場合のみ Dependency Inject 可能にします。
-    /* 〜 省略 〜 */
-    return counter;
   }
 ```
 
@@ -162,13 +112,80 @@ _またカウンタ機能の挙動は、これまで通り `step_1`〜`step_3`�
 ```
 
 
+**【新規追加】**
+```dart
+  testWidgets('Counter increments dark magic test',
+      (WidgetTester tester) async {
+    // Build our app and trigger a frame.
+    await tester.pumpWidget(const MyApp());
+
+    CounterDiContainer di = CounterDiContainer.singleton;
+    int id = di.listUpIds().first;
+
+    // アプリ内で生成された、カウンタ機能オブジェクトの参照を取得する。
+    Injectable<ReferencableCounter> injector = di.getInjector(id);
+    ReferencableCounter reference = injector.reference!;
+
+    // Dark Magic に、カウンタ機能オブジェクトの参照（依存元）を注入する。
+    DarkMagicCounter magic = DarkMagicCounter();
+    magic.init(reference);
+
+    // 注入先の依存元を Dark Magic と差し替える。
+    injector.swap(magic);
+
+    // Verify that our counter starts at 0.
+    expect(find.text('0'), findsOneWidget);
+    expect(find.text('1'), findsNothing);
+
+    // Tap the '+' icon and trigger a frame.
+    magic.count = 99;
+    await tester.tap(find.byIcon(Icons.add));
+    await tester.pump();
+
+    // Verify that our counter has incremented.
+    expect(find.text('0'), findsNothing);
+    expect(find.text('1'), findsNothing);
+    expect(find.text('100'), findsOneWidget);
+
+    magic.dispose();
+    injector.dispose();
+  });
+```
+
+```dart
+/// 自身に依存元が注入され、注入先の依存元として差替られる「入れ子注入先」
+class DarkMagicCounter extends AbstractInjectable<ReferencableCounter>
+    implements InjectableCounter {
+  DarkMagicCounter();
+
+  @override
+  int get count {
+    return reference!.count;
+  }
+
+  @override
+  set count(int value) => reference!.count = value;
+
+  @override
+  void increment() {
+    reference!.increment();
+    debugLog('increment!');
+  }
+}
+```
+
+
 ### テストコード実行
 
 テスト実行結果  
 <img src="../../../docs/images/step4_test.png" width="600" style="border: solid #c0c0c0;" />
 - テストに成功した事がわかるだけでなく、テストされたときのカウント値がログ出力されています。  
-  _ログ出力の count=0, 1, 0, 100, 0, 100 は、3つのテストから、2回づつカウント値が読み出され、_  
-  _テストタイトル smokeでは 0と1、mockでは 0と100、referenceでは 0と100 の値が読み出されたことを示します。_  
+  _ログ出力の count=0, 1, 0, 100, 0, 100, 0, 100, increment! は、4つのテストから、2回づつカウント値が読み出され、_  
+  _テストタイトル smokeでは 0と1、mockでは 0と100、referenceでは 0と100、dark magicでは 0と100 の値が読み出され、FABタップのログが出力されたことを示します。_
+
+- _`dark magic`パターンは、**注入先の依存元と(自身に依存元が注入された) dark magicオブジェクトとを差し替える、多段階の入れ子の依存注入**により、
+`FABタップでログ出力する`という **依存元も注入先のコードも変更することなく、追加要件を満たせる** ことを示します。_  
+_この多段階依存注入パターンは、DIコンテナの`create`メソッドでも利用できることに留意ください。_
 
 - テストに失敗した場合は、  
   ハンズオン作業後の `step_4`のコードと
@@ -176,4 +193,10 @@ _またカウンタ機能の挙動は、これまで通り `step_1`〜`step_3`�
 
 
 ## 課題
-1. ボイラープレート・コードは、将来的にマクロなどでの自動生成が必要でしょう。
+1. 動的な依存注入や依存元の差替は、リリースモードでは禁止する必要がある。
+2. 動的な依存注入や依存元の差し替えでは、非同期処理での複数からの同時操作を防ぐため排他ロックが必要でしょう。
+3. ボイラープレート・コードは、将来的にマクロなどでの自動生成が必要でしょう。
+
+
+## 次のステップ（まとめ）へ
+こちらから [step_5](../step_5/README.md) の「ミニハンズオンまとめ」に進んでください。
