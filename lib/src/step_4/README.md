@@ -111,8 +111,35 @@ _またカウンタ機能の挙動は、これまで通り `step_1`〜`step_3`�
   });
 ```
 
+テストコードでは、注入先は依存元の参照機能を持っていることを利用した、**注入先の依存元と(自身に依存元が注入された)オブジェクトとを差し替える、多段階の入れ子の依存注入**により、
+テストコード内から参照先のカウンタ値を `99`に設定したり、`FABタップのイベントのログ出力`によりテストアクションを見えるようにする、
+**「カウント値が 100になったときのテスト」** と **「依存元も注入先のコードも変更することなく、追加要件に対応するテスト」** も行っています。_  
+
+この対応のために、`DarkMagicCounter`クラスと、`testWidgets('Counter increments dark magic test'`パターンを追加しています。
 
 **【新規追加】**
+```dart
+/// 自身に依存元が注入され、注入先の依存元として差し替えられる「多段階の入れ子注入先」
+class DarkMagicCounter extends AbstractInjectable<ReferencableCounter>
+        implements InjectableCounter {
+  DarkMagicCounter();
+
+  @override
+  int get count {
+    return reference!.count;
+  }
+
+  @override
+  set count(int value) => reference!.count = value;
+
+  @override
+  void increment() {
+    reference!.increment();
+    debugLog('increment!');
+  }
+}
+```
+
 ```dart
   testWidgets('Counter increments dark magic test',
       (WidgetTester tester) async {
@@ -147,31 +174,10 @@ _またカウンタ機能の挙動は、これまで通り `step_1`〜`step_3`�
     expect(find.text('1'), findsNothing);
     expect(find.text('100'), findsOneWidget);
 
+    // 後始末
+    injector.swap(reference);
     magic.dispose();
-    injector.dispose();
   });
-```
-
-```dart
-/// 自身に依存元が注入され、注入先の依存元として差替られる「入れ子注入先」
-class DarkMagicCounter extends AbstractInjectable<ReferencableCounter>
-    implements InjectableCounter {
-  DarkMagicCounter();
-
-  @override
-  int get count {
-    return reference!.count;
-  }
-
-  @override
-  set count(int value) => reference!.count = value;
-
-  @override
-  void increment() {
-    reference!.increment();
-    debugLog('increment!');
-  }
-}
 ```
 
 
@@ -185,7 +191,7 @@ class DarkMagicCounter extends AbstractInjectable<ReferencableCounter>
 
 - _`dark magic`パターンは、**注入先の依存元と(自身に依存元が注入された) dark magicオブジェクトとを差し替える、多段階の入れ子の依存注入**により、
 `FABタップでログ出力する`という **依存元も注入先のコードも変更することなく、追加要件を満たせる** ことを示します。_  
-_この多段階依存注入パターンは、DIコンテナの`create`メソッドでも利用できることに留意ください。_
+_この **多段階依存注入パターンは、DIコンテナの`create`メソッドでも利用できる** ことに留意ください。_
 
 - テストに失敗した場合は、  
   ハンズオン作業後の `step_4`のコードと
