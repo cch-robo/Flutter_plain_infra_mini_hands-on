@@ -92,12 +92,7 @@ DIコンテナ(`CounterDiContainer`)の`create`メソッドに**依存元オブ�
   /// Counter オブジェクト生成
   @override
   Counter create() {
-    if (!checkDebugMode(isThrowError: false)) {
-      // デバッグモードでないので Dependency Inject を利用させません。
-      CounterImpl counter = CounterImpl._();
-      return counter;
-    }
-    // デバッグモードの場合のみ Dependency Inject 可能にします。
+    // 依存注入 Dependency Inject を行います。
     CounterDouble counter = CounterDouble._();
     CounterImpl reference = CounterImpl._();
     counter.init(reference);

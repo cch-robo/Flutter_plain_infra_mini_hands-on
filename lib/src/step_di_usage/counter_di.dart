@@ -9,10 +9,8 @@ import '../infra/dependency_injector.dart';
 
 /// Counter オブジェクトの DIコンテナ・クラス
 class CounterDiContainer extends AbstractDependencyInjector<Counter, ReferencableCounter, InjectableCounter> {
-  // TODO add line start.
-  /// 注入禁止要請フラグ
-  static bool isForbiddenInject = false;
-  // TODO add line end.
+  // 動的操作禁止要請フラグ
+  static bool isNoUseDynamicOperation = false;
 
   /// シングルトン・インスタンス
   static CounterDiContainer? _singletonInstance;
@@ -27,19 +25,14 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
   }
 
   /// プライベート・コンストラクタ
-  CounterDiContainer._();
+  CounterDiContainer._() {
+    isForbiddenDynamicOperation = isNoUseDynamicOperation;
+  }
 
   /// Counter オブジェクト生成
   @override
   Counter create() {
-    // TODO modify line start.
-    if (!checkDebugMode(isThrowError: false) || isForbiddenInject) {
-      // デバッグモードでないか注入禁止なので Dependency Inject を利用させません。
-      CounterImpl counter = CounterImpl._();
-      return counter;
-    }
-    // TODO modify line end.
-    // デバッグモードの場合のみ Dependency Inject 可能にします。
+    // 依存注入 Dependency Inject を行います。
     CounterDouble counter = CounterDouble._();
     CounterImpl reference = CounterImpl._();
     counter.init(reference);
