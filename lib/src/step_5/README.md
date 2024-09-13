@@ -32,7 +32,7 @@ Dependency Injection や DIコンテナが利用できそうと感じていた�
 - **注意事項**  
 **動的な依存元の参照及び差替は、アプリ内のコードで絶対に行わせないようにしてください。**  
 アプリ実行中に動的操作が行われているか否かを確認するため、  
-`CounterDiContainer`には、動的操作禁止要請フラグ `isNoUseDynamicOperation`を設けています。  
+`CounterDiContainer`には、動的操作禁止要請フラグ `isNoUseDynamicOperation`を設けています。<br/>  
 _フラグを`true`に設定すれば、動的操作が禁止され、アプリ内で動的操作されているコードが実行されるとエラーが発生します。_  
 _step_2 〜 Step_4 テストコードの main関数の先頭行に `CounterDiContainer.isNoUseDynamicOperation = true;` を追加すれば、  
 エラーが発生してテストに失敗することが確認できます。_
@@ -42,7 +42,8 @@ _step_2 〜 Step_4 テストコードの main関数の先頭行に `CounterDiCon
 - 簡易DIコンテナと依存元と注入先の基底インターフェースや基盤クラスについては、  
   [lib/src/infra/dependency_injector.dart](../infra/dependency_injector.dart) を御参照ください。  
 
-- テスト設計については、拙セッション資料 [Flutter テスト講座 テスト設計できるようになろう](https://drive.google.com/file/d/1OznsKYxa_VSkrAwuH2cqpf1ZHxBNsLEg/view) を参照いただければ幸いです。  
+- テスト設計については、拙セッション資料  
+  [Flutter テスト講座 テスト設計できるようになろう](https://drive.google.com/file/d/1OznsKYxa_VSkrAwuH2cqpf1ZHxBNsLEg/view) を参照いただければ幸いです。  
 
 
 ### ミニハンズオン時間が余った方へ
