@@ -87,6 +87,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
 /// Counter オブジェクトの DIコンテナ・クラス
 class CounterDiContainer extends AbstractDependencyInjector<Counter, ReferencableCounter, InjectableCounter> {
+  // 動的操作禁止要請フラグ
+  static bool isNoUseDynamicOperation = false;
+
   /// シングルトン・インスタンス
   static CounterDiContainer? _singletonInstance;
 
@@ -100,7 +103,9 @@ class CounterDiContainer extends AbstractDependencyInjector<Counter, Referencabl
   }
 
   /// プライベート・コンストラクタ
-  CounterDiContainer._();
+  CounterDiContainer._() {
+    isForbiddenDynamicOperation = isNoUseDynamicOperation;
+  }
 
   /// Counter オブジェクト生成
   @override
