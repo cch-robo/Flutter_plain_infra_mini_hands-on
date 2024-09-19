@@ -12,6 +12,9 @@ import 'src/step_3/counter_page.dart' as step_3;
 // step.4:依存実態をラップした注入先にカウント値のログ出力を追加します。
 import 'src/step_4/counter_page.dart' as step_4;
 
+// step_4_use_example:簡易DIコンテナ拡張例、動的マウントとアンマウントのサンプル。
+import 'src/step_4_di_use_example/counter_page.dart' as step_4_use_example;
+
 // step.5:簡易DIコンテナによる依存注入のまとめ。
 import 'src/step_5/counter_page.dart' as step_5;
 
