@@ -8,15 +8,17 @@
 ## ハンズオン作業前のコード内容確認
 ハンズオン作業前(コードの追加修正前)のコード内容は、`step_3` ハンズオン作業後をベースにしていますが、  
 [lib/src/step_4_di_use_example/counter_page.dart](./counter_page.dart) と
-[lib/src/step_4_di_use_example/counter_di.dart](./counter_di.dart) には、  
+[lib/src/step_4_di_use_example/counter_di.dart](./counter_di.dart) および  
+[lib/src/step_4_di_use_example/additional_function.dart](./additional_function.dart) には、  
 追加コードが（コメントアウト部を含めて）実装済みです。
 
 - IDEで、この`README.md`と同じディレクトリにある [lib/src/step_4_di_use_example/counter_di.dart](./counter_di.dart) と、  
-  [lib/src/step_4_di_use_example/counter_page.dart](./counter_page.dart) を開いてください。  
+  [lib/src/step_4_di_use_example/counter_page.dart](./counter_page.dart) および  
+  [lib/src/step_4_di_use_example/additional_function.dart](./additional_function.dart) を開いてください。  
   _`DartPad`を使われている方は、ブラウザで開いてください。_
 
 
-## ハンズオン作業<br/>DIコンテナと 注入先クラスの追加コードを確認する。
+## ハンズオン作業<br/>DIコンテナと カウンタ画面と 追加要件のコードを確認する。
 
 ### DIコンテナの 追加コード(mount と unmountメソッド)を確認
 - IDEで [counter_di.dart](./counter_di.dart) を開いて、
@@ -49,10 +51,9 @@ void unmount(int id) {
 ```
 
 
-### カウンタ画面における、多段階依存注入対応と追加の注入先を確認
+### カウンタ画面における、多段階依存注入対応を確認
 - IDEで [counter_page.dart](./counter_page.dart) を開いて、
-  `_MyHomePageState`のコメントアウト実装が追加された、`initState`と`dispose`メソッドと、  
-  追加の注入先の`DarkMagicCounter`クラスを確認してください。  
+  `_MyHomePageState`のコメントアウト実装が追加された、`initState`と`dispose`メソッドを確認してください。  
   _`DartPad`を使われている方は、引き続きブラウザで作業を続けてください。_
 
 **【initState】**
@@ -86,6 +87,11 @@ void unmount(int id) {
   }
 ```
 
+
+### 追加要件に対応する、注入先クラスを確認
+- IDEで [counter_page.dart](./counter_page.dart) を開いて、
+  依存元に注入する追加要件の`DarkMagicCounter`クラスを確認してください。  
+  _`DartPad`を使われている方は、引き続きブラウザで作業を続けてください。_
 
 **【DarkMagicCounter】**
 ```dart

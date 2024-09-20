@@ -5,7 +5,6 @@
 
 import '../infra/default_error.dart';
 import '../infra/dependency_injector.dart';
-import 'counter_page.dart';
 
 /// Counter オブジェクトの DIコンテナ・クラス
 class CounterDiContainer extends AbstractDependencyInjector<Counter, ReferencableCounter, InjectableCounter> {

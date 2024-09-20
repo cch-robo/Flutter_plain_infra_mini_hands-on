@@ -3,8 +3,7 @@
 
 import 'package:flutter/material.dart';
 
-import '../infra/debug_logger.dart';
-import '../infra/dependency_injector.dart';
+import 'additional_function.dart';
 import 'counter_di.dart';
 
 void main() {
@@ -97,26 +96,5 @@ class _MyHomePageState extends State<MyHomePage> {
         child: const Icon(Icons.add),
       ), // This trailing comma makes auto-formatting nicer for build methods.
     );
-  }
-}
-
-/// 自身に依存元が注入され、注入先の依存元として差し替えられる「多段階の入れ子注入先」
-class DarkMagicCounter extends AbstractInjectable<ReferencableCounter> implements InjectableCounter {
-  DarkMagicCounter();
-
-  @override
-  int get count {
-    return reference!.count;
-  }
-
-  @override
-  set count(int value) => reference!.count = value;
-
-  @override
-  void increment() {
-    // increment 実行前後の counter値をログ出力する。
-    debugLog('before - increment: count=$count');
-    reference!.increment();
-    debugLog('after  - increment: count=$count');
   }
 }

@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:infra/src/step_4_di_use_example/counter_di.dart';
 import 'package:infra/src/step_4_di_use_example/counter_page.dart';
+import 'package:infra/src/step_4_di_use_example/additional_function.dart';
 
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
