@@ -89,7 +89,7 @@ void unmount(int id) {
 
 
 ### 追加要件に対応する、注入先クラスを確認
-- IDEで [counter_page.dart](./counter_page.dart) を開いて、
+- IDEで [additional_function.dart](./additional_function.dart) を開いて、
   依存元に注入する追加要件の`DarkMagicCounter`クラスを確認してください。  
   _`DartPad`を使われている方は、引き続きブラウザで作業を続けてください。_
 
