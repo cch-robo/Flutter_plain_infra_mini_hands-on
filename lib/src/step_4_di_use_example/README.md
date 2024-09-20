@@ -8,7 +8,7 @@
 ## ハンズオン作業前のコード内容確認
 ハンズオン作業前(コードの追加修正前)のコード内容は、`step_3` ハンズオン作業後をベースにしていますが、  
 [lib/src/step_4_di_use_example/counter_page.dart](./counter_page.dart) と
-[lib/src/step_4_di_use_example/counter_di.dart](./counter_di.dart) には、
+[lib/src/step_4_di_use_example/counter_di.dart](./counter_di.dart) には、  
 追加コードが（コメントアウト部を含めて）実装済みです。
 
 - IDEで、この`README.md`と同じディレクトリにある [lib/src/step_4_di_use_example/counter_di.dart](./counter_di.dart) と、  
@@ -51,10 +51,9 @@ void unmount(int id) {
 
 ### カウンタ画面における、多段階依存注入対応と追加の注入先を確認
 - IDEで [counter_page.dart](./counter_page.dart) を開いて、
-  `_MyHomePageState`のコメントアウト実装が追加された、`initState`と`dispose`メソッドと、
+  `_MyHomePageState`のコメントアウト実装が追加された、`initState`と`dispose`メソッドと、  
   追加の注入先の`DarkMagicCounter`クラスを確認してください。  
   _`DartPad`を使われている方は、引き続きブラウザで作業を続けてください。_
-- IDEで [counter_di.dart](./counter_di.dart) を開いて、
 
 **【initState】**
 ```dart
@@ -174,11 +173,11 @@ class DarkMagicCounter extends AbstractInjectable<ReferencableCounter> implement
 
 
 ## コード確認後のアプリ実行
-- `MyHomePageState`クラスの `initState`と `dispose`メソッドがコメントアウトのままで、
-  FAB(`+`)をタップすると、画面中央のカウント値が＋１されるだけにとどまります。
+- `MyHomePageState`クラスの `initState`と `dispose`メソッドがコメントアウトのままで、FAB(`+`)をタップすると、  
+  画面中央のカウント値が＋１されるだけにとどまります。
 
-- `MyHomePageState`クラスの `initState`と `dispose`メソッドのコメントアウトを外して、
-  FAB(`+`)をタップすると、画面中央のカウント値の＋１だけでなく、処理前後のカウント値が出力されます。
+- `MyHomePageState`クラスの `initState`と `dispose`メソッドのコメントアウトを外して、FAB(`+`)をタップすると、  
+  画面中央のカウント値の＋１だけでなく、処理前後のカウント値が出力されます。
 
 
 ## 注意事項
