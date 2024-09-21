@@ -60,6 +60,9 @@ _step_2 〜 Step_4 テストコードの main関数の先頭行に `CounterDiCon
 - 簡易DIコンテナと依存元と注入先の基底インターフェースや基盤クラスについては、  
   [lib/src/infra/dependency_injector.dart](../infra/dependency_injector.dart) を御参照ください。  
 
+- `step4_di_use_example`コンセプトについては、  
+  [Flutter DI応用 - ViewModelを依存性注入可能にする](https://drive.google.com/file/d/1K7fwElOfE0waUeWcDOwa-vjMkID7od98/view?usp=sharing) を併せて御参照ください。
+
 - テスト設計については、拙セッション資料  
   [Flutter テスト講座 テスト設計できるようになろう](https://drive.google.com/file/d/1OznsKYxa_VSkrAwuH2cqpf1ZHxBNsLEg/view) を参照いただければ幸いです。  
 
